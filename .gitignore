@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+*.pyo
+*.pyd
+*.pyc
+*.pkl
+
+# Virtual Environments
+venv/
+env/
+.venv/
+
+# Environment Variables
+.env
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# VSCode settings
+.vscode/
+
+# Test Output / Logs / Temp
+*.log
+test_output/
+
+# Docker
+*.bak
+*.swp
+docker-compose.override.yml
+
+# Frontend - Node modules and build artifacts
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+frontend/.env
+frontend/.next/
+frontend/.turbo/
+
+# Dependency locks (optional)
+poetry.lock
+Pipfile.lock
+
+# OS Specific
+.DS_Store
+Thumbs.db
+
+# Coverage
+htmlcov/
+coverage.xml
+*.cover
+*.py,cover
+.tox/
+.nox/
+.cache/
+.coverage
+.pytest_cache/
