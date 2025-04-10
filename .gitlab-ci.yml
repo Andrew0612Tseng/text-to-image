@@ -5,9 +5,3 @@ helloworld:
 run_unit_tests:
   script:
     -echo "Running unit tests"
-
-  before_script:
-    -echo "安裝套件"
-
-  after_script:
-    -echo "刪除不必要的檔案"
