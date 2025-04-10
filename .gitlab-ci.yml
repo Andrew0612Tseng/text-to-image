@@ -16,7 +16,6 @@ test-backend:
   stage: test
   image: python:3.11-slim
   script:
-    - cd app
     - pip install -r requirements.txt
     - python test.py
   only:
