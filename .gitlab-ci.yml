@@ -4,4 +4,4 @@ helloworld:
 
 run_unit_tests:
   script:
-    -echo "Running unit tests"
+    - echo "Running unit tests"
