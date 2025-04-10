@@ -18,6 +18,7 @@ test-backend:
   script:
     - cd app
     - pip install -r requirements.txt
+    - python -m uvicorn main:app --reload
     - cd ..
     - python test.py
   only:
