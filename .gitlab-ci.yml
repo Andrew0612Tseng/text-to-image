@@ -16,10 +16,12 @@ test-backend:
   stage: test
   image: python:3.11-slim
   script:
+    - cd app
     - pip install -r requirements.txt
+    - cd ..
     - python test.py
   only:
-    - main
+    - develop
 
 # 建立前端映像
 build-frontend:
@@ -35,7 +37,7 @@ build-frontend:
     - docker build -t $FRONTEND_IMAGE .
     - docker push $FRONTEND_IMAGE
   only:
-    - main
+    - develop
 
 # 建立後端映像
 build-backend:
@@ -51,7 +53,7 @@ build-backend:
     - docker build -t $BACKEND_IMAGE .
     - docker push $BACKEND_IMAGE
   only:
-    - main
+    - develop
   needs:
     - test-backend
 
