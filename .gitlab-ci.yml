@@ -16,10 +16,10 @@ test-backend:
   stage: test
   image: python:3.11-slim
   script:
+    - echo "OPENAI_API_KEY=$OPENAI_API_KEY" > .env
     - cd app
     - pip install -r requirements.txt
-    - python -m uvicorn main:app --host 0.0.0.0 --port 8000 &
-    - sleep 5
+    - python -m uvicorn main:app --host 0.0.0.0 --port 8000
     - cd ..
     - python test.py
   only:
