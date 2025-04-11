@@ -51,8 +51,10 @@ build-backend:
     - gcloud config set project $PROJECT_ID
     - gcloud auth configure-docker
   script:
-    - cd app
-    - gcloud builds submit --tag $BACKEND_IMAGE .
+    - set -x  # 開啟 command trace
+    - cd app || (echo "❌ cd app 失敗！目錄不存在？" && exit 1)
+    - echo "🧪 BACKEND_IMAGE=$BACKEND_IMAGE"
+    - gcloud builds submit --tag $BACKEND_IMAGE . || (echo "❌ gcloud build 失敗！" && exit 1)
   only:
     - develop
   needs:
