@@ -43,7 +43,7 @@ A full-stack project that takes text prompts and generates corresponding images 
 ## 📦 Tech Stack
 
 - **Backend**: Python, FastAPI, OpenAI API (DALL-E)
-- **Frontend**: React (Vite), Tailwind CSS
+- **Frontend**: React (Vite), CSS
 - **Cloud**: Docker, GCP Cloud Run, GCR
 - **Others**: Nginx, GitLab CI/CD (optional)
 
