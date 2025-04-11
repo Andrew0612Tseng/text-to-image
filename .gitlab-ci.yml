@@ -45,6 +45,7 @@ build-backend:
   services:
     - docker:dind
   before_script:
+    - echo "${#GCP_SERVICE_KEY}"  # 印出字串長度
     - echo "$GCP_SERVICE_KEY" | base64 -d > gcloud-service-key.json
     - gcloud auth activate-service-account --key-file=gcloud-service-key.json
     - gcloud auth configure-docker
