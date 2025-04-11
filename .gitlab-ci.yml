@@ -54,7 +54,9 @@ build-backend:
     - set -x  # 開啟 command trace
     - cd app || (echo "❌ cd app 失敗！目錄不存在？" && exit 1)
     - echo "🧪 BACKEND_IMAGE=$BACKEND_IMAGE"
-    - gcloud builds submit --tag $BACKEND_IMAGE . --no-stream || (echo "❌ gcloud build 失敗！" && exit 1)
+    - BUILD_ID=$(gcloud builds submit --tag $BACKEND_IMAGE . --async --format="value(id)")
+    - echo " 構建已提交，ID: $BUILD_ID"
+    - echo " 查看構建狀態: https://console.cloud.google.com/cloud-build/builds/$BUILD_ID?project=$PROJECT_ID"
   only:
     - develop
   needs:
