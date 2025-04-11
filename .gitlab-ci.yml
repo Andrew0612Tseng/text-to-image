@@ -25,7 +25,7 @@ test-backend:
 # 建立前端映像
 build-frontend:
   stage: build
-  image: docker:stable
+  image: google/cloud-sdk:alpine
   services:
     - docker:dind
   before_script:
@@ -34,15 +34,14 @@ build-frontend:
     - gcloud auth configure-docker
   script:
     - cd frontend
-    - docker build -t $FRONTEND_IMAGE .
-    - docker push $FRONTEND_IMAGE
+    - gcloud builds submit --tag $FRONTEND_IMAGE .
   only:
     - develop
 
 # 建立後端映像
 build-backend:
   stage: build
-  image: docker:stable
+  image: google/cloud-sdk:alpine
   services:
     - docker:dind
   before_script:
@@ -51,10 +50,53 @@ build-backend:
     - gcloud auth configure-docker
   script:
     - cd app
-    - docker build -t $BACKEND_IMAGE .
-    - docker push $BACKEND_IMAGE
+    - gcloud builds submit --tag $BACKEND_IMAGE .
   only:
     - develop
   needs:
     - test-backend
 
+# 部署前端到 Cloud Run
+deploy-frontend:
+  stage: deploy
+  image: google/cloud-sdk:latest
+  before_script:
+    - echo "$GCP_SERVICE_KEY" | base64 -d > gcloud-service-key.json
+    - gcloud auth activate-service-account --key-file gcloud-service-key.json
+    - gcloud config set project $PROJECT_ID
+  script:
+    - |
+      gcloud run deploy $FRONTEND_SERVICE_NAME \
+      --image $FRONTEND_IMAGE \
+      --platform managed \
+      --region $REGION \
+      --allow-unauthenticated \
+      --port 8080 \
+      --set-env-vars="PORT=8080" \
+      --timeout=300s
+  only:
+    - develop
+  needs:
+    - build-frontend
+
+# 部署後端到 Cloud Run
+deploy-backend:
+  stage: deploy
+  image: google/cloud-sdk:latest
+  before_script:
+    - echo "$GCP_SERVICE_KEY" | base64 -d > gcloud-service-key.json
+    - gcloud auth activate-service-account --key-file gcloud-service-key.json
+    - gcloud config set project $PROJECT_ID
+  script:
+    - |
+      gcloud run deploy $BACKEND_SERVICE_NAME \
+      --image $BACKEND_IMAGE \
+      --platform managed \
+      --region $REGION \
+      --allow-unauthenticated \
+      --port 8000 \
+      --set-env-vars="PORT=8000,OPENAI_API_KEY=${OPENAI_API_KEY}"
+  only:
+    - develop
+  needs:
+    - build-backend
