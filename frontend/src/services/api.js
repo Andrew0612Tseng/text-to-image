@@ -2,7 +2,7 @@ const API_BASE_URL = '/api';
 
 export async function generateImage(prompt, size = '1024x1024', n = 1, model = 'dall-e-3') {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/images/generate`, {
+    const response = await fetch(`${API_BASE_URL}/images/generate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ export async function generateImage(prompt, size = '1024x1024', n = 1, model = '
 
 export async function getModels() {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/images/models`);
+    const response = await fetch(`${API_BASE_URL}/images/models`);
     
     if (!response.ok) {
       throw new Error(`API錯誤: ${response.status}`);
