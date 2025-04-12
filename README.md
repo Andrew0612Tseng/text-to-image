@@ -2,13 +2,13 @@
 
 A full-stack project that takes text prompts and generates corresponding images using DALL-E model.
 
-🚀 Deployed on **GCP Cloud Run** with a modern frontend interface.
+🚀 Deployed on **GCP Cloud Run** with a modern frontend interface and automated CI/CD via GitLab.
 
 ---
 
 ## 🌐 Give it a try!
 
-👉 [Open the Text-to-Image App](https://dalle-frontend-641883752192.asia-east1.run.app/)
+👉 [Open the Text-to-Image App](https://text-to-image-frontend-641883752192.asia-east1.run.app/)
 
 ---
 
@@ -35,6 +35,7 @@ A full-stack project that takes text prompts and generates corresponding images 
 - ✍️ Text-to-Image generation using a backend LLM API model
 - 🎨 Real-time frontend preview
 - 🌩️ Cloud-native deployment (GCP Cloud Run + Docker)
+- 🔁 Automated GitLab CI/CD pipeline
 - 📦 RESTful API with FastAPI
 - ⚛️ Modern frontend (React)
 
@@ -45,7 +46,20 @@ A full-stack project that takes text prompts and generates corresponding images 
 - **Backend**: Python, FastAPI, OpenAI API (DALL-E)
 - **Frontend**: React (Vite), CSS
 - **Cloud**: Docker, GCP Cloud Run, GCR
-- **Others**: Nginx, GitLab CI/CD (optional)
+- **CI/CD**: GitLab CI/CD
+- **Others**: Nginx
+
+---
+
+## 🔄 GitLab CI/CD Overview
+
+This project uses **GitLab CI/CD** for continuous integration and deployment to GCP Cloud Run.
+
+### 🛠️ Pipeline Stages
+
+1. **Test**: Install dependencies and verify backend integrity
+2. **Build**: Create Docker images and upload to Google Container Registry
+3. **Deploy**: Deploy both frontend and backend to Cloud Run
 
 ---
 
@@ -56,7 +70,7 @@ A full-stack project that takes text prompts and generates corresponding images 
 ```bash
 cd app
 pip install -r requirements.txt
-uvicorn main:app --reload
+uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
 ### Frontend (React)
