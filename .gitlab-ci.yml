@@ -67,7 +67,7 @@ deploy-frontend:
     - gcloud auth activate-service-account --key-file gcloud-service-key.json
     - gcloud config set project $PROJECT_ID
   script:
-    - gcloud run deploy $FRONTEND_SERVICE_NAME --image $FRONTEND_IMAGE --platform managed --region $REGION --allow-unauthenticated --port 8080 --set-env-vars="PORT=8080" --timeout=300s
+    - gcloud run deploy $FRONTEND_SERVICE_NAME --image $FRONTEND_IMAGE --platform managed --region $REGION --allow-unauthenticated --port 8080 --timeout=300s
   only:
     - develop
   needs:
@@ -82,7 +82,7 @@ deploy-backend:
     - gcloud auth activate-service-account --key-file gcloud-service-key.json
     - gcloud config set project $PROJECT_ID
   script:
-    - gcloud run deploy $BACKEND_SERVICE_NAME --image $BACKEND_IMAGE --platform managed --region $REGION --allow-unauthenticated --port 8000 --set-env-vars="PORT=8000,OPENAI_API_KEY=${OPENAI_API_KEY}"
+    - gcloud run deploy $BACKEND_SERVICE_NAME --image $BACKEND_IMAGE --platform managed --region $REGION --allow-unauthenticated --port 8000 --set-env-vars="OPENAI_API_KEY=${OPENAI_API_KEY}"
   only:
     - develop
   needs:
