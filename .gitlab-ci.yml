@@ -82,6 +82,7 @@ deploy-backend:
     - gcloud auth activate-service-account --key-file gcloud-service-key.json
     - gcloud config set project $PROJECT_ID
   script:
+    - echo "OPENAI_API_KEY=$OPENAI_API_KEY" > .env
     - gcloud run deploy $BACKEND_SERVICE_NAME --image $BACKEND_IMAGE --platform managed --region $REGION --allow-unauthenticated --port 8000 --set-env-vars="OPENAI_API_KEY=${OPENAI_API_KEY}"
   only:
     - develop
